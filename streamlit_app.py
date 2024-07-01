@@ -72,24 +72,53 @@ population = st.sidebar.selectbox('Population', df['population'].unique())
 habitat = st.sidebar.selectbox('Habitat', df['habitat'].unique())
 
 # Main panel
-st.write("""
-# Mushroom Edibility Prediction App
+st.image('mushroom.jpg', use_column_width=True)  # Menambahkan gambar di atas aplikasi
+st.title("Mushroom Edibility Prediction App")
+st.markdown("""
 This app predicts the **edibility** of mushrooms based on various characteristics.
 """)
-prediction, probability = predict_edibility(cap_shape, cap_surface, cap_color, bruises, odor,
-                                            gill_attachment, gill_spacing, gill_size, gill_color,
-                                            stalk_shape, stalk_root, stalk_surface_above_ring,
-                                            stalk_surface_below_ring, stalk_color_above_ring,
-                                            stalk_color_below_ring, veil_type, veil_color,
-                                            ring_number, ring_type, spore_print_color,
-                                            population, habitat)
 
-# Display prediction
-st.subheader('Prediction')
-edibility = 'Poisonous' if prediction[0] == 1 else 'Edible'
-st.write(f"Based on the provided information, the mushroom is predicted to be **{edibility}**.")
+# Predict button for user input
+if st.sidebar.button('Predict'):
+    prediction, probability = predict_edibility(cap_shape, cap_surface, cap_color, bruises, odor,
+                                                gill_attachment, gill_spacing, gill_size, gill_color,
+                                                stalk_shape, stalk_root, stalk_surface_above_ring,
+                                                stalk_surface_below_ring, stalk_color_above_ring,
+                                                stalk_color_below_ring, veil_type, veil_color,
+                                                ring_number, ring_type, spore_print_color,
+                                                population, habitat)
 
-# Display prediction probabilities
-st.subheader('Prediction Probabilities')
-st.write(f"Probability of Edible: {probability[0][0]:.2f}")
-st.write(f"Probability of Poisonous: {probability[0][1]:.2f}")
+    # Display prediction
+    st.subheader('Prediction')
+    edibility = 'Poisonous' if prediction[0] == 1 else 'Edible'
+    st.write(f"Based on the provided information, the mushroom is predicted to be **{edibility}**.")
+
+    # Display prediction probabilities
+    st.subheader('Prediction Probabilities')
+    st.write(f"Probability of Edible: {probability[0][0]:.2f}")
+    st.write(f"Probability of Poisonous: {probability[0][1]:.2f}")
+
+# Footer
+st.markdown("""
+---
+App developed by [Your Name]
+""")
+
+# Set background color and layout
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #f0f5f5;
+    }
+    .st-bw {
+        background-color: #ffffff;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0px 0px 5px #888888;
+        border-radius: 10px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
