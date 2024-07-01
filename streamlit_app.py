@@ -75,7 +75,6 @@ population = st.sidebar.selectbox('Population', df['population'].unique())
 habitat = st.sidebar.selectbox('Habitat', df['habitat'].unique())
 
 # Main panel
-# st.image('mushroom.jpg', use_column_width=True)  # Menambahkan gambar di atas aplikasi
 st.title("Mushroom Edibility Prediction App")
 st.markdown("""
 This app predicts the **edibility** of mushrooms based on various characteristics.
@@ -106,6 +105,8 @@ st.markdown("""
 ---
 App developed by [Your Name]
 """)
+st.image('https://thegraphicsfairy.com/wp-content/uploads/2023/09/Fall-Mushrooms-NV-GraphicsFairy.jpg', width=None)  # Masukkan URL gambar di sini
+
 
 # Set background color and layout
 st.markdown(
