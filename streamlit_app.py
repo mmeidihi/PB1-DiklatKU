@@ -122,5 +122,3 @@ App developed by Kelompok PB 1
 """)
 st.image('https://thegraphicsfairy.com/wp-content/uploads/2023/09/Fall-Mushrooms-NV-GraphicsFairy.jpg', width=None)  # Masukkan URL gambar di sini
 
-
-# Set background color and layout
