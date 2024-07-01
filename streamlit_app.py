@@ -4,7 +4,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 
 # Load dataset
-url = "https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data"
+# url = "https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data"
+url = 'agaricus-lepiota.data'
 columns = ['class', 'cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor',
            'gill-attachment', 'gill-spacing', 'gill-size', 'gill-color',
            'stalk-shape', 'stalk-root', 'stalk-surface-above-ring',
@@ -12,12 +13,16 @@ columns = ['class', 'cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor',
            'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number',
            'ring-type', 'spore-print-color', 'population', 'habitat']
 df = pd.read_csv(url, names=columns)
+# df = pd.read_csv('mushrooms.csv')
 dfe = df.copy()
 
 # Data cleaning and preprocessing
-encoder = LabelEncoder()
+encoder = {}
 for col in dfe.columns:
-    dfe[col] = encoder.fit_transform(dfe[col])
+    print(col)
+    encoder[col] = LabelEncoder()
+    # print(encoder)
+    dfe[col] = encoder[col].fit_transform(dfe[col])
 
 # Define features and target variable
 X = dfe.drop(['class'], axis=1)
@@ -27,6 +32,9 @@ Y = dfe['class']
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X, Y)
 
+# cek pake encoded shit
+# df = dfe.copy()
+
 # Function to predict mushroom edibility
 def predict_edibility(cap_shape, cap_surface, cap_color, bruises, odor,
                       gill_attachment, gill_spacing, gill_size, gill_color,
@@ -35,15 +43,22 @@ def predict_edibility(cap_shape, cap_surface, cap_color, bruises, odor,
                       stalk_color_below_ring, veil_type, veil_color,
                       ring_number, ring_type, spore_print_color,
                       population, habitat):
+    head = ['cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor',
+           'gill-attachment', 'gill-spacing', 'gill-size', 'gill-color',
+           'stalk-shape', 'stalk-root', 'stalk-surface-above-ring',
+           'stalk-surface-below-ring', 'stalk-color-above-ring',
+           'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number',
+           'ring-type', 'spore-print-color', 'population', 'habitat']
     input_data = pd.DataFrame([[cap_shape, cap_surface, cap_color, bruises, odor,
                                 gill_attachment, gill_spacing, gill_size, gill_color,
                                 stalk_shape, stalk_root, stalk_surface_above_ring,
                                 stalk_surface_below_ring, stalk_color_above_ring,
                                 stalk_color_below_ring, veil_type, veil_color,
                                 ring_number, ring_type, spore_print_color,
-                                population, habitat]])
-    for col in input_data:
-        input_data[col] = encoder.transform(input_data[col])
+                                population, habitat]], columns=head)
+    for col in input_data.columns:
+        print(col)
+        input_data[col] = encoder[col].transform(input_data[col])
     prediction = model.predict(input_data)
     probability = model.predict_proba(input_data)
 
@@ -103,26 +118,9 @@ if st.sidebar.button('Predict'):
 # Footer
 st.markdown("""
 ---
-App developed by [Your Name]
+App developed by Kelompok PB 1
 """)
 st.image('https://thegraphicsfairy.com/wp-content/uploads/2023/09/Fall-Mushrooms-NV-GraphicsFairy.jpg', width=None)  # Masukkan URL gambar di sini
 
 
 # Set background color and layout
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #f0f5f5;
-    }
-    .st-bw {
-        background-color: #ffffff;
-        padding: 10px;
-        margin-bottom: 10px;
-        box-shadow: 0px 0px 5px #888888;
-        border-radius: 10px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
