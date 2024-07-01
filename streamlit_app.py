@@ -12,19 +12,20 @@ columns = ['class', 'cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor',
            'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number',
            'ring-type', 'spore-print-color', 'population', 'habitat']
 df = pd.read_csv(url, names=columns)
+dfe = df.copy()
 
 # Data cleaning and preprocessing
 encoder = LabelEncoder()
-for col in df.columns:
-    df[col] = encoder.fit_transform(df[col])
+for col in dfe.columns:
+    dfe[col] = encoder.fit_transform(dfe[col])
 
 # Define features and target variable
-X = df.drop(['class'], axis=1)
-y = df['class']
+X = dfe.drop(['class'], axis=1)
+Y = dfe['class']
 
 # Building the model
 model = RandomForestClassifier(n_estimators=100, random_state=42)
-model.fit(X, y)
+model.fit(X, Y)
 
 # Function to predict mushroom edibility
 def predict_edibility(cap_shape, cap_surface, cap_color, bruises, odor,
@@ -41,6 +42,8 @@ def predict_edibility(cap_shape, cap_surface, cap_color, bruises, odor,
                                 stalk_color_below_ring, veil_type, veil_color,
                                 ring_number, ring_type, spore_print_color,
                                 population, habitat]])
+    for col in input_data:
+        input_data[col] = encoder.transform(input_data[col])
     prediction = model.predict(input_data)
     probability = model.predict_proba(input_data)
 
@@ -72,7 +75,7 @@ population = st.sidebar.selectbox('Population', df['population'].unique())
 habitat = st.sidebar.selectbox('Habitat', df['habitat'].unique())
 
 # Main panel
-st.image('mushroom.jpg', use_column_width=True)  # Menambahkan gambar di atas aplikasi
+# st.image('mushroom.jpg', use_column_width=True)  # Menambahkan gambar di atas aplikasi
 st.title("Mushroom Edibility Prediction App")
 st.markdown("""
 This app predicts the **edibility** of mushrooms based on various characteristics.
