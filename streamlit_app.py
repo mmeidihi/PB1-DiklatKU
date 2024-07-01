@@ -102,7 +102,7 @@ st.markdown("""
 ---
 App developed by [Your Name]
 """)
-st.image('https://example.com/path/to/your/mushroom-image.jpg', use_column_width=True)  # Masukkan URL gambar di sini
+st.image('https://example.com/path/to/your/mushroom-image.jpg', width=None)  # Masukkan URL gambar di sini
 
 
 # Set background color and layout
