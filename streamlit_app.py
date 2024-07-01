@@ -104,22 +104,3 @@ App developed by [Your Name]
 """)
 st.image('https://thegraphicsfairy.com/wp-content/uploads/2023/09/Fall-Mushrooms-NV-GraphicsFairy.jpg', width=None)  # Masukkan URL gambar di sini
 
-
-# Set background color and layout
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #f0f5f5;
-    }
-    .st-bw {
-        background-color: #ffffff;
-        padding: 10px;
-        margin-bottom: 10px;
-        box-shadow: 0px 0px 5px #888888;
-        border-radius: 10px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
